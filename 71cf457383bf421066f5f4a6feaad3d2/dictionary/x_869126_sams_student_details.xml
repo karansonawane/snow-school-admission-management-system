@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element db_object_id="fee0d5f783bf421066f5f4a6feaad3d3" label="Student Details" max_length="40" name="x_869126_sams_student_details" type="collection">
+        <element label="Email" max_length="40" name="email" type="string"/>
         <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="Name" max_length="40" name="name" type="string"/>
+        <element label="Admission Date" max_length="40" name="admission_date" type="glide_date"/>
+        <element label="Guardian Name" max_length="40" name="guardian_name" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="First Name" max_length="40" name="name" type="string"/>
+        <element label="Last Name" max_length="40" name="last_name" type="string"/>
+        <element label="Address" max_length="100" name="address" type="string"/>
+        <element choice="1" label="Gender" max_length="40" name="gender" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Male" sequence="1" value="male"/>
+                <element inactive_on_update="false" label="Prefer not to say" sequence="3" value="pns"/>
+                <element inactive_on_update="false" label="Female" sequence="2" value="female"/>
+            </choice>
+        </element>
+        <element label="Guardian Contact Number" max_length="10" name="guardian_contact_number" type="string"/>
+        <element label="Contact Number" max_length="10" name="contact_number" type="string"/>
+        <element label="Date Of Birth" max_length="40" name="date_of_birth" type="glide_date"/>
+        <element label="Previous School" max_length="100" name="previous_school" type="string"/>
     </element>
 </database>
