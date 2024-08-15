@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>POST</http_method>
+        <name>Create Record</name>
+        <operation_script><![CDATA[(function process( /*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+
+    // implement resource here
+    var requestBody = request.body;
+    var requestString = requestBody.dataString;
+    var requestData = JSON.parse(requestString);
+
+    var mandatoryFields = [];
+
+    var firstName = requestData.firstName;
+    var lastName = requestData.lastName;
+    var contactNumber = requestData.contactNumber;
+
+    if (!firstName) mandatoryFields.push('firstName');
+
+    if (!lastName) mandatoryFields.push('lastName');
+
+    if (!contactNumber) mandatoryFields.push('contactNumber');
+
+
+    if (mandatoryFields.length > 0) {
+        var errorMessage;
+        mandatoryFields.length > 1 ? errorMessage = mandatoryFields.join(', ') + ' are mandatory' : errorMessage = mandatoryFields.join(', ') + ' is mandatory';
+        var responseBody = {
+            "status": "ERROR",
+            "message": errorMessage
+        };
+        response.setStatus(400);
+        response.setBody(responseBody);
+        return;
+    }
+
+    var gRec = new GlideRecord('x_869126_sams_student_details');
+    gRec.initialize();
+    gRec.name = firstName;
+    gRec.last_name = lastName;
+    gRec.contact_number = contactNumber;
+    gRec.insert();
+
+    var responseObj = {
+        "status": "SUCCESS",
+        "message": 'Record Created',
+        "details": {
+            "record": gRec.getDisplayValue('number')
+        }
+    };
+
+    response.setStatus(201);
+    response.setBody(responseObj);
+
+})(request, response);]]></operation_script>
+        <operation_uri>/api/x_869126_sams/student_registration_apis/createRecord</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/createRecord</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-08-15 09:06:52</sys_created_on>
+        <sys_id>8a6a569d8300121066f5f4a6feaad36e</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Create Record</sys_name>
+        <sys_package display_value="School Admission Management System" source="x_869126_sams">71cf457383bf421066f5f4a6feaad3d2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="School Admission Management System">71cf457383bf421066f5f4a6feaad3d2</sys_scope>
+        <sys_update_name>sys_ws_operation_8a6a569d8300121066f5f4a6feaad36e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-08-15 09:23:40</sys_updated_on>
+        <web_service_definition display_value="Student Registration APIs">15811ad18300121066f5f4a6feaad364</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+</record_update>

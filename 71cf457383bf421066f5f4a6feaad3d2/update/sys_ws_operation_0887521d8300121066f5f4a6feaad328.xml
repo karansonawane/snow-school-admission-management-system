@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>GET</http_method>
+        <name>Retrieve Record</name>
+        <operation_script><![CDATA[(function process( /*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+
+    // implement resource here
+    var recordNumber = request.pathParams.number;
+
+    var gRec = new GlideRecord('x_869126_sams_student_details');
+    gRec.addQuery('number', recordNumber);
+    gRec.query();
+
+    if (gRec.next()) {
+        response.setStatus(200);
+        response.setBody({
+            "status": "SUCCESS",
+            "details": {
+                "sys_id": gRec.sys_id,
+                "First Name": gRec.getDisplayValue('name'),
+                "Last Name": gRec.getDisplayValue('last_name'),
+                "Contact Detais": {
+                    "Contact Number": gRec.getDisplayValue('contact_number'),
+                    "Email": gRec.getDisplayValue('email'),
+                }
+            }
+        });
+    } else {
+        response.setStatus(404);
+        response.setBody({
+            "status": 'ERROR',
+            "message": 'Incident not found'
+        });
+        // response.setError(400, 'Incident not found');
+    }
+
+})(request, response);]]></operation_script>
+        <operation_uri>/api/x_869126_sams/student_registration_apis/retrieveRecord/{number}</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/retrieveRecord/{number}</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-08-15 08:58:17</sys_created_on>
+        <sys_id>0887521d8300121066f5f4a6feaad328</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Retrieve Record</sys_name>
+        <sys_package display_value="School Admission Management System" source="x_869126_sams">71cf457383bf421066f5f4a6feaad3d2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="School Admission Management System">71cf457383bf421066f5f4a6feaad3d2</sys_scope>
+        <sys_update_name>sys_ws_operation_0887521d8300121066f5f4a6feaad328</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-08-15 09:02:31</sys_updated_on>
+        <web_service_definition display_value="Student Registration APIs">15811ad18300121066f5f4a6feaad364</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+</record_update>
